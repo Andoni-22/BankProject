@@ -5,55 +5,109 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Andoni
- */
-public class Customer {
-    
+
+@XmlRootElement(name = "customer")
+public class Customer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+   
     private Long id;
-    /**
-     * First name of the customer.
-     */
     private String firstName;
-    /**
-     * Customer's last name.
-     */
     private String lastName;
-    /**
-     * Customer's middle name initial.
-     */
     private String middleInitial;
-    /**
-     * Customer's address street.
-     */
     private String street;
-    /**
-     * Customer's address city.
-     */
     private String city;
-    /**
-     * Customer's address state.
-     */
     private String state;
-        /**
-     * Customer's address zip.
-     */
     private Integer zip;
-    /**
-     * Customer's phone.
-     */
     private Long phone;
-    /**
-     * Customer's email.
-     */
     private String email;
-    /**
-     * Relational field for customer's accounts.
-     */
-    private Set<Account> accounts;
     
-    
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getMiddleInitial() {
+        return middleInitial;
+    }
+    public void setMiddleInitial(String middleInitial) {
+        this.middleInitial = middleInitial;
+    }
+    public String getStreet() {
+        return street;
+    }
+    public void setStreet(String street) {
+        this.street = street;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public String getState() {
+        return state;
+    }
+    public void setState(String state) {
+        this.state = state;
+    }
+    public Integer getZip() {
+        return zip;
+    }
+    public void setZip(Integer zip) {
+        this.zip = zip;
+    }
+    public Long getPhone() {
+        return phone;
+    }
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+   
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Customer)) {
+            return false;
+        }
+        Customer other = (Customer) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "Customer[ name="+ firstName+" "+lastName+" "+" id=" + id + " ]";
+    }
 }

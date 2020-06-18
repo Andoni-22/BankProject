@@ -6,8 +6,8 @@
 package entity;
 
 /**
- *
- * @author Andoni
+ * Accounts types for Account instances: standard or credit type.
+ * @author Javier Martín Uría
  */
 public enum AccountType {
     /**
