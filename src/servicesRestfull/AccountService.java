@@ -6,6 +6,7 @@
 package servicesRestfull;
 
 import entity.Account;
+import java.util.ResourceBundle;
 import java.util.Set;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
@@ -29,7 +30,7 @@ public class AccountService {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/CRUDBankServerSide2/webresources";
+    private static final String BASE_URI = ResourceBundle.getBundle("files.http").getString("http");
 
     public AccountService() {
         client = javax.ws.rs.client.ClientBuilder.newClient();

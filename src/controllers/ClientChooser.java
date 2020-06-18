@@ -12,8 +12,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,9 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -35,7 +31,7 @@ import javafx.stage.WindowEvent;
  *
  * @author Andoni
  */
-public class ClientChooser {
+    public class ClientChooser {
     
     @FXML
     private Button btnCancel;
@@ -59,6 +55,9 @@ public class ClientChooser {
     private TableColumn tcEmail;
     
     private Stage stage;
+    
+    private static final Logger LOGGER = Logger.getLogger
+        (ClientChooser.class.getPackage() + "." + ClientChooser.class.getName());
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -71,6 +70,7 @@ public class ClientChooser {
         stage.setScene(clientScene);
         stage.setResizable(false);
         stage.setTitle("Choose a client");
+        LOGGER.info("Cargando clientChooser");
         stage.show();
         
         llenarTabla(customer);  
@@ -93,7 +93,7 @@ public class ClientChooser {
     }
 
     private void llenarTabla(ArrayList<Customer> customer) {
-        
+        LOGGER.info("Cargando datos de tabla clientes");
         tcId.setCellValueFactory(
             new PropertyValueFactory("id"));
         tcName.setCellValueFactory(
@@ -114,6 +114,7 @@ public class ClientChooser {
         alert.initOwner(stage);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+            LOGGER.info("Cerrando aplicacion");
             Platform.exit();              
         }
     }   

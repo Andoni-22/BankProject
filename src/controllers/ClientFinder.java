@@ -80,6 +80,8 @@ public class ClientFinder {
             onClose();
         });
         
+        
+        
         tfID.textProperty().addListener(new ChangeListener<String>(){
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -117,36 +119,42 @@ public class ClientFinder {
                     Optional<ButtonType> result = alert.showAndWait();
                 }else{
                     if(name.length()>0){
-                        String auxName = tfLastName.getText().toString();
-                        
-                        CustomerService client = new CustomerService();
-                        Set<Customer>custList = client.findAll(new GenericType<Set<Customer>>() {});
-                        ArrayList<Customer> list = new ArrayList(custList);
-                        ArrayList<Customer> listCustomer = new ArrayList();
-                        for(int i=0; i<list.size(); i++){
-                            if(list.get(i).getLastName().contains(name)==true){
-                                listCustomer.add(list.get(i));
+                        if(name.length()<32){
+                            String auxName = tfLastName.getText().toString();
+
+                            CustomerService client = new CustomerService();
+                            Set<Customer>custList = client.findAll(new GenericType<Set<Customer>>() {});
+                            ArrayList<Customer> list = new ArrayList(custList);
+                            ArrayList<Customer> listCustomer = new ArrayList();
+                            for(int i=0; i<list.size(); i++){
+                                if(list.get(i).getLastName().contains(name)==true){
+                                    listCustomer.add(list.get(i));
+                                }
                             }
-                        }
-                        
-                        if(listCustomer.size()==0){
-                            lblLastNameNotFOund.setVisible(true);
+
+                            if(listCustomer.size()==0){
+                                lblLastNameNotFOund.setVisible(true);
+                            }else{
+                                try {
+                                    openWindowChooser(listCustomer);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(ClientFinder.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
                         }else{
-                            try {
-                                openWindowChooser(listCustomer);
-                            } catch (IOException ex) {
-                                Logger.getLogger(ClientFinder.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        
-                        
-                        
-                    }else if(auxId.length()>0){
-                        Long id = Long.parseLong(auxId);
-                        if(id<=0){
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
-                            alert.setHeaderText("Error, id must be more than 0");
+                            alert.setHeaderText("Error, name must have less than 32 characters");
+                            alert.initOwner(stage);
+                            Optional<ButtonType> result = alert.showAndWait();
+                        }
+                      
+                    }else if(auxId.length()>0){
+                        Long id = Long.parseLong(auxId);
+                        if(id>999999999 || id<=0){
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Error, id must be less than 999999999 and more than 0");
                             alert.initOwner(stage);
                             Optional<ButtonType> result = alert.showAndWait();
                         }else{

@@ -7,6 +7,7 @@ package bankproject;
 
 import controllers.ClientFinder;
 import java.io.IOException;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,9 @@ import javafx.stage.Stage;
  */
 public class BankProject extends Application {
     
+    private static final Logger LOGGER = Logger.getLogger
+        (BankProject.class.getPackage() + "." + BankProject.class.getName());
+    
     @Override
     public void start(Stage stage) throws IOException {
     
@@ -26,6 +30,7 @@ public class BankProject extends Application {
         Parent root = (Parent) loader.load();
         ClientFinder controller = (ClientFinder) loader.getController();
         controller.setStage(stage);
+        LOGGER.info("Cargando ClientFinder");
         controller.initStage(root);
         
     }

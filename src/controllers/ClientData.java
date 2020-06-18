@@ -9,11 +9,10 @@ import entity.Account;
 import entity.Customer;
 import entity.Movement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,6 +88,8 @@ public class ClientData {
     @FXML
     private TableColumn tcDescription;
 
+    private static final Logger LOGGER = Logger.getLogger
+        (ClientData.class.getPackage() + "." + ClientData.class.getName());
     
     private Stage stage;
 
@@ -103,6 +104,7 @@ public class ClientData {
         stage.setScene(clientScene);
         stage.setResizable(false);
         stage.setTitle("Choose a client");
+        LOGGER.info("Cargando ClientData");
         stage.show();
         
         tfCity.setEditable(false);
@@ -144,7 +146,7 @@ public class ClientData {
     }
 
     private void insertAccountCombo(Customer customer) {
-        
+        LOGGER.info("Cargando datos combobox accounts");
         AccountService accountService = new AccountService();
         Set<Account>accountList = accountService.findAll(new GenericType<Set<Account>>() {});
         if(accountList.size()==0){
@@ -155,15 +157,13 @@ public class ClientData {
             Optional<ButtonType> result = alert.showAndWait();
         
         }else{
-             ArrayList<Account> auxList = new ArrayList(accountList);
+            ArrayList<Account> auxList = new ArrayList(accountList);
             ArrayList<Account> list = new ArrayList();
             ArrayList<Customer>cust = new ArrayList();
-            System.out.println(auxList.size());
             Long id = customer.getId();
 
             for(int i = 0; i<auxList.size(); i++){
                 cust = new ArrayList<Customer>(auxList.get(i).getCustomers());
-                System.out.println(cust.size());
                 for(int j = 0; j<cust.size(); j++){
                     if(id.equals(cust.get(j).getId())){
                         list.add(auxList.get(i));
@@ -174,13 +174,13 @@ public class ClientData {
             for(int i = 0; i<list.size();i++){
                 accountString.add(list.get(i).getId().toString());
             }
-            System.out.println(list.size());
             comboBoxAccounts.setItems(FXCollections.observableList(accountString));
             comboBoxAccounts.getSelectionModel().selectFirst();   
         }   
     }
 
     private void insterCustomerData(Customer customer) {
+        LOGGER.info("Cargando datos del usuario");
         String label = "#"+customer.getId().toString()+" // "+customer.getFirstName()+" "+customer.getLastName();
         lblUser.setText(label);
         tfCity.setText(customer.getCity());
@@ -194,10 +194,12 @@ public class ClientData {
     
     public void handleOnSelectAccount(ObservableValue<Object> observable,
                                         Object oldValue,Object newValue){
+        LOGGER.info("Cambiando datos de la tablas");
         insertTableView();   
     }
 
     private void insertTableView() {
+        LOGGER.info("Cargando datos tableView");
         
         String id = comboBoxAccounts.getSelectionModel().getSelectedItem().toString();
         

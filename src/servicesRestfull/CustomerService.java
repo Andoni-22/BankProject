@@ -9,6 +9,7 @@ import entity.Account;
 import entity.Customer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
@@ -32,7 +33,7 @@ public class CustomerService {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/CRUDBankServerSide2/webresources";
+    private static final String BASE_URI = ResourceBundle.getBundle("files.http").getString("http");
 
     public CustomerService() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
